@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/domain/models/slider_object.dart';
+import 'package:flutter_clean_architecture/domain/models/models.dart';
 import 'package:flutter_clean_architecture/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

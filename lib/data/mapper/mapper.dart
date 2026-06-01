@@ -1,0 +1,16 @@
+import 'package:flutter_clean_architecture/app/constants.dart';
+import 'package:flutter_clean_architecture/app/extensions.dart';
+import 'package:flutter_clean_architecture/data/responses/base_response.dart';
+import 'package:flutter_clean_architecture/domain/models/models.dart';
+
+extension CustomerResponseMapper on CustomerResponse?{
+  Customer toDomain(){
+    return Customer(this?.id.orEmpty() ??  Constants.empty, this?.name.orEmpty() ??  Constants.empty, this?.numOfNotifications.orZero() ??  Constants.zero);
+  }
+}
+
+extension ContactsResponseMapper on ContactsResponse?{
+  Contacts toDomain(){
+    return Contacts(this?.phone.orEmpty() ?? Constants.empty, this?.email.orEmpty() ??  Constants.empty, this?.link.orEmpty() ??  Constants.empty);
+  }
+}

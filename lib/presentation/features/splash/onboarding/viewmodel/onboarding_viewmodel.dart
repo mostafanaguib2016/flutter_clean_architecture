@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_clean_architecture/domain/models/slider_object.dart';
+import 'package:flutter_clean_architecture/domain/models/models.dart';
 import 'package:flutter_clean_architecture/presentation/base/base_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/resources/assets_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
