@@ -24,8 +24,8 @@ class Contacts{
 }
 
 class Authentication{
-  Customer customer;
-  Contacts contact;
+  Customer? customer;
+  Contacts? contact;
 
   Authentication(this.customer, this.contact);
 
