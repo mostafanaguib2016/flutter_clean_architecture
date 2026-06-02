@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_clean_architecture/data/data_source/remote_data_source.dart';
 import 'package:flutter_clean_architecture/data/mapper/mapper.dart';
+import 'package:flutter_clean_architecture/data/network/error_handler.dart';
 import 'package:flutter_clean_architecture/data/network/failure.dart';
 import 'package:flutter_clean_architecture/data/network/network_info.dart';
 import 'package:flutter_clean_architecture/data/network/requests.dart';
@@ -17,15 +18,19 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, Authentication>> login(LoginRequest loginRequest) async{
     if(await _networkInfo.isConnected){
-      final response = await _remoteDataSource.login(loginRequest);
-      if(response.status == 0){
-        return Right(response.toDomain());
-      }else{
-        return Left(Failure(response.status ?? 422, response.message ?? "Something went wrong"));
+      try {
+        final response = await _remoteDataSource.login(loginRequest);
+        if(response.status == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(ApiInternalStatus.Failure, response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (e) {
+        return Left(ErrorHandler.handleError(e).failure);
       }
     }else{
-      return Left(Failure(505, "Please check your internet connection!"));
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 
-} 
+}
