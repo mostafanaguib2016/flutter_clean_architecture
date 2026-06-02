@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/presentation/features/auth/login/login_screen.dart';
+import 'package:flutter_clean_architecture/presentation/features/auth/login/view/login_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/register/register_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/main/main_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/splash/onboarding/view/onboarding_screen.dart';
