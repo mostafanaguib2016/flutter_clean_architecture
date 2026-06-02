@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
 import 'package:flutter_clean_architecture/app/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -10,14 +11,18 @@ const String AUTHORIZATION = "authorization";
 const String DEFAULT_LANGUAGE = "language";
 
 class DioFactory {
+  final AppSharedPreferences _appSharedPreferences;
+  DioFactory(this._appSharedPreferences);
+
   Future<Dio> getDio() async{
     Dio dio = Dio();
 
+    String language = await _appSharedPreferences.getLanguage();
     int _timeout = 60*1000;
     Map<String,String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       // AUTHORIZATION: "",
-      DEFAULT_LANGUAGE: "en",
+      DEFAULT_LANGUAGE: language,
       ACCEPT: APPLICATION_JSON,
     };
 
@@ -26,6 +31,7 @@ class DioFactory {
       headers: headers,
       receiveTimeout: Duration(milliseconds: Constants.apiTimeout),
       sendTimeout: Duration(milliseconds: Constants.apiTimeout),
+
     );
 
     if(!kReleaseMode){
