@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/login/view/login_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/register/register_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/main/main_screen.dart';
@@ -29,6 +30,7 @@ class RouteGenerator{
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_)=>const RegisterScreen());
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_)=>const LoginScreen());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_)=>const MainScreen());

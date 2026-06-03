@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/data/data_source/remote_data_source.dart';
 import 'package:flutter_clean_architecture/data/mapper/mapper.dart';
 import 'package:flutter_clean_architecture/data/network/error_handler.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_clean_architecture/data/network/network_info.dart';
 import 'package:flutter_clean_architecture/data/network/requests.dart';
 import 'package:flutter_clean_architecture/domain/models/models.dart';
 import 'package:flutter_clean_architecture/domain/repository/repository.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class RepositoryImpl implements Repository {
 
@@ -17,7 +19,11 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, Authentication>> login(LoginRequest loginRequest) async{
-    if(await _networkInfo.isConnected){
+    var connected = await InternetConnectionChecker.instance.hasConnection;
+    debugPrint("Check connection ${connected}");
+
+
+    // if(await _networkInfo.isConnected){
       try {
         final response = await _remoteDataSource.login(loginRequest);
         if(response.status == ApiInternalStatus.SUCCESS){
@@ -28,9 +34,9 @@ class RepositoryImpl implements Repository {
       } catch (e) {
         return Left(ErrorHandler.handleError(e).failure);
       }
-    }else{
+    /*}else{
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-    }
+    }*/
   }
 
 }

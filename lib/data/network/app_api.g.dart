@@ -12,7 +12,7 @@ part of 'app_api.dart';
 
 class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://clean-architecture-apis.wiremockapi.cloud/';
+    baseUrl ??= 'https://clean-architecture-apis.wiremockapi.cloud';
   }
 
   final Dio _dio;
