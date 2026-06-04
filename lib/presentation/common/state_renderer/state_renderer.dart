@@ -1,12 +1,11 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/data/network/failure.dart';
+import 'package:flutter_clean_architecture/presentation/resources/assets_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/color_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/font_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/styles_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/values_manager.dart';
+import 'package:lottie/lottie.dart';
 
 enum StateRendererType {
   // Popup states
@@ -52,32 +51,32 @@ class StateRenderer extends StatelessWidget {
         return _getPopupDialog(
           context,
           [
-            _getAnimatedImage(),
+            _getAnimatedImage(JsonAssets.loadingJson),
           ]
         );
       case StateRendererType.popupErrorState:
         return _getPopupDialog(
             context,
             [
-              _getAnimatedImage(),
+              _getAnimatedImage(JsonAssets.errorJson),
               _getMessage(message),
               _getRetryButton(AppStrings.ok,context)
             ]
         );
       case StateRendererType.fullScreenLoadingState:
         return _getItemsColumn([
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.loadingJson),
           _getMessage(message)
         ]);
       case StateRendererType.fullScreenErrorState:
         return _getItemsColumn([
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.errorJson),
           _getMessage(message),
           _getRetryButton(AppStrings.retryAgain,context)
         ]);
       case StateRendererType.fullScreenEmptyState:
         return _getItemsColumn(
-          [_getAnimatedImage(),_getMessage(message)]
+          [_getAnimatedImage(JsonAssets.emptyJson),_getMessage(message)]
         );
       case StateRendererType.contentState:
         return Container();
@@ -124,11 +123,13 @@ class StateRenderer extends StatelessWidget {
     );
   }
 
-  Widget _getAnimatedImage(){
+  Widget _getAnimatedImage(String animationName){
     return SizedBox(
       height: AppSizes.s100,
       width: AppSizes.s100,
-      child: Container(),
+      child: Lottie.asset(
+        animationName
+      ),
     );
   }
 
