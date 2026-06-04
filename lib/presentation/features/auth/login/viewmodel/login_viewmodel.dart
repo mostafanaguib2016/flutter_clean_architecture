@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean_architecture/domain/usecase/login_usecase.dart';
 import 'package:flutter_clean_architecture/presentation/base/base_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/common/freezed_data_class.dart';
+import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
 
 class LoginViewmodel extends BaseViewModel with LoginViewmodelInputs,LoginViewmodelOutputs {
 
@@ -20,13 +21,15 @@ class LoginViewmodel extends BaseViewModel with LoginViewmodelInputs,LoginViewmo
 
   @override
   void dispose() {
+    super.dispose();
     _passwordStreamController.close();
     _userNameStreamController.close();
     _areAllInputsValidStreamController.close();
   }
   @override
   void start() {
-    // TODO: implement start
+    //
+    inputState.add(ContentState());
   }
 
   @override
