@@ -72,31 +72,47 @@ class EmptyState extends FlowState{
 
 }
 
+bool _isDialogShowing = false;
 extension FlowStateExtension on FlowState{
-  Widget getScreenWidget(BuildContext context,Widget contentScreenWidget,Function retryActionFunction){
+  Widget getScreenWidget(BuildContext context,
+      Widget contentScreenWidget,Function retryActionFunction){
     switch(runtimeType){
-      case LoadingState _:{
-        dismissDialog(context);
+      case LoadingState :
+      {
         if(getStateRendererType() == StateRendererType.popupLoadingState){
           showPopup(context, getStateRendererType(), getMessage());
           return contentScreenWidget;
         }else{
-          return StateRenderer(stateRendererType: getStateRendererType(),message: getMessage(),retryActionFunction: retryActionFunction,);
+          return StateRenderer(
+            stateRendererType: getStateRendererType(),
+            message: getMessage(),
+            retryActionFunction: retryActionFunction
+          );
         }
       }
-      case ErrorState _:{
+      case ErrorState :
+      {
         dismissDialog(context);
-        if(getStateRendererType() == StateRendererType.popupLoadingState){
+        if(getStateRendererType() == StateRendererType.popupErrorState){
           showPopup(context, getStateRendererType(), getMessage());
           return contentScreenWidget;
         }else{
-          return StateRenderer(stateRendererType: getStateRendererType(),message: getMessage(),retryActionFunction: retryActionFunction,);
+          return StateRenderer(
+            stateRendererType: getStateRendererType(),
+            message: getMessage(),
+            retryActionFunction: retryActionFunction
+          );
         }
       }
-      case EmptyState _:{
-        return StateRenderer(stateRendererType: getStateRendererType(), retryActionFunction: (){},message: getMessage(),);
+      case EmptyState :
+      {
+        return StateRenderer(
+          stateRendererType: getStateRendererType(),
+          retryActionFunction: (){},message: getMessage()
+        );
       }
-      case ContentState _:{
+      case ContentState :
+      {
         dismissDialog(context);
         return contentScreenWidget;
       }
@@ -111,16 +127,31 @@ extension FlowStateExtension on FlowState{
       ModalRoute.of(context)?.isCurrent != true;
 
   dismissDialog(BuildContext context){
-    if(_isCurrentDialogShowing(context)){
+    if(_isDialogShowing){
       Navigator.of(context,rootNavigator: true).pop(true);
+      _isDialogShowing = false;
     }
   }
 
   showPopup(BuildContext context,StateRendererType type,String message){
-    WidgetsBinding.instance.addPostFrameCallback((_)=>
-        showDialog(context: context, builder: (BuildContext context) =>
-            StateRenderer(stateRendererType: type, retryActionFunction: (){},message: message,)
-        )
-    );
+    if (_isDialogShowing) return;
+
+    _isDialogShowing = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => StateRenderer(
+          stateRendererType: type,
+          retryActionFunction: () {},
+          message: message,
+        ),
+      ).then((_) {
+        _isDialogShowing = false;
+      });
+
+    });
   }
 }

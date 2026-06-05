@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean_architecture/domain/usecase/login_usecase.dart';
 import 'package:flutter_clean_architecture/presentation/base/base_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/common/freezed_data_class.dart';
+import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer.dart';
 import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
 
 class LoginViewmodel extends BaseViewModel with LoginViewmodelInputs,LoginViewmodelOutputs {
@@ -34,12 +35,14 @@ class LoginViewmodel extends BaseViewModel with LoginViewmodelInputs,LoginViewmo
 
   @override
   login() async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
     (await _loginUseCase.execute(LoginUseCaseInput(loginObject.userName, loginObject.password))).fold(
         (failure) =>{
-          debugPrint("${failure.message}  ${failure.code}")
+          inputState.add(ErrorState(StateRendererType.popupErrorState,failure.message)),
+          debugPrint("ERROR ==>  ${failure.message}  ${failure.code}")
         },
       (data) =>{
-
+        inputState.add(ContentState()),
       },
     );
   }
