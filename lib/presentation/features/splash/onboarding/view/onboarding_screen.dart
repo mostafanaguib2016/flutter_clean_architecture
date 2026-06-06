@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
+import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/presentation/features/splash/onboarding/view/onboarding_page.dart';
 import 'package:flutter_clean_architecture/presentation/features/splash/onboarding/viewmodel/onboarding_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/resources/assets_manager.dart';
@@ -20,8 +22,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final PageController _pageController = PageController();
   final OnBoardingViewModel _onBoardingViewModel = OnBoardingViewModel();
+  final AppSharedPreferences _sharedPreferences = instance<AppSharedPreferences>();
 
   _bind(){
+    _sharedPreferences.setOnBoardingScreenViewed();
     _onBoardingViewModel.start();
   }
 

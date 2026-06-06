@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
 import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/login/viewmodel/login_viewmodel.dart';
@@ -20,12 +22,22 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final AppSharedPreferences _sharedPreferences = instance<AppSharedPreferences>();
 
 
   _bind(){
     _loginViewmodel.start();
     _userNameController.addListener(() => _loginViewmodel.setUserName(_userNameController.text));
     _passwordController.addListener(() => _loginViewmodel.setPassword(_passwordController.text));
+    
+    _loginViewmodel.isUserLoggedInSuccessfullyStreamController.stream.listen((isLoggedIn){
+      if(isLoggedIn){
+        SchedulerBinding.instance.addPostFrameCallback((_){
+          _sharedPreferences.setUserLoggedIn();
+          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+        });
+      }
+    });
   }
 
   @override
