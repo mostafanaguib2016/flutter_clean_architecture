@@ -47,6 +47,18 @@ class ErrorState extends FlowState{
 
 }
 
+class SuccessState extends FlowState {
+  String message;
+
+  SuccessState(this.message);
+
+  @override
+  String getMessage() => message;
+
+  @override
+  StateRendererType getStateRendererType() => StateRendererType.popupSuccess;
+}
+
 class ContentState extends FlowState{
 
   ContentState();

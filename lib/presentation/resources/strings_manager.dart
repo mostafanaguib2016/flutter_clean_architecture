@@ -27,4 +27,8 @@ class AppStrings{
   static const loading = "Loading...";
   static const retryAgain = "Retry again";
   static const ok = "Ok";
+
+  static const emailHint = "Email";
+  static const invalidEmail = "Invalid Email";
+  static const resetPassword = "Reset Password";
 }
