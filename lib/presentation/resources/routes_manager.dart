@@ -29,6 +29,7 @@ class RouteGenerator{
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_)=>const OnboardingScreen());
       case Routes.registerRoute:
+        initRegisterModule();
         return MaterialPageRoute(builder: (_)=>const RegisterScreen());
       case Routes.loginRoute:
         initLoginModule();

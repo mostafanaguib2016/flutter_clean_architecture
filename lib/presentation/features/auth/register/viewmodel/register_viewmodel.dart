@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter_clean_architecture/domain/usecase/register_usecase.dart';
 import 'package:flutter_clean_architecture/presentation/base/base_viewmodel.dart';
 
 class RegisterViewModel extends BaseViewModel
@@ -12,6 +13,10 @@ class RegisterViewModel extends BaseViewModel
   StreamController passwordStreamController = StreamController<String>.broadcast();
   StreamController profilePictureStreamController = StreamController<File>.broadcast();
   StreamController areAllInputsValidStreamController = StreamController<void>.broadcast();
+
+  final RegisterUseCase _registerUseCase;
+  RegisterViewModel(this._registerUseCase);
+
 
   @override
   // TODO: implement inputAreAllInputsValid
