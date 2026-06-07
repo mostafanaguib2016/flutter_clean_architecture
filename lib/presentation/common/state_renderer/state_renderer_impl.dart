@@ -116,6 +116,17 @@ extension FlowStateExtension on FlowState{
           );
         }
       }
+      case SuccessState:
+        {
+          // i should check if we are showing loading popup to remove it before showing success popup
+          dismissDialog(context);
+
+          // show popup
+          showPopup(context, StateRendererType.popupSuccess, getMessage(),
+              title: AppStrings.success);
+          // return content ui of the screen
+          return contentScreenWidget;
+        }
       case EmptyState :
       {
         return StateRenderer(
@@ -145,7 +156,9 @@ extension FlowStateExtension on FlowState{
     }
   }
 
-  showPopup(BuildContext context,StateRendererType type,String message){
+  showPopup(BuildContext context,StateRendererType type,String message,
+      {String title = Constants.empty}
+      ){
     if (_isDialogShowing) return;
 
     _isDialogShowing = true;

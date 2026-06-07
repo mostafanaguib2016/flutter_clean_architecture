@@ -23,7 +23,7 @@ class RepositoryImpl implements Repository {
     debugPrint("Check connection ${connected}");
 
 
-    // if(await _networkInfo.isConnected){
+    if(await _networkInfo.isConnected){
       try {
         final response = await _remoteDataSource.login(loginRequest);
         if(response.status == ApiInternalStatus.SUCCESS){
@@ -34,13 +34,17 @@ class RepositoryImpl implements Repository {
       } catch (e) {
         return Left(ErrorHandler.handleError(e).failure);
       }
-    /*}else{
+    }else{
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-    }*/
+    }
   }
 
   @override
   Future<Either<Failure, String>> forgetPassword(String email) async{
+    var connected = await InternetConnectionChecker.instance.hasConnection;
+    debugPrint("Check connection ${connected}");
+
+
     if (await _networkInfo.isConnected) {
       try {
         // its safe to call API
@@ -64,6 +68,28 @@ class RepositoryImpl implements Repository {
     } else {
       // return network connection error
       // return left
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Authentication>> register(RegisterRequest registerRequest) async{
+    var connected = await InternetConnectionChecker.instance.hasConnection;
+    debugPrint("Check connection ${connected}");
+
+
+    if(await _networkInfo.isConnected){
+      try {
+        final response = await _remoteDataSource.register(registerRequest);
+        if(response.status == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(ApiInternalStatus.Failure, response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (e) {
+        return Left(ErrorHandler.handleError(e).failure);
+      }
+    }else{
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }

@@ -31,4 +31,6 @@ class AppStrings{
   static const emailHint = "Email";
   static const invalidEmail = "Invalid Email";
   static const resetPassword = "Reset Password";
+  static const success = "Success";
+
 }
