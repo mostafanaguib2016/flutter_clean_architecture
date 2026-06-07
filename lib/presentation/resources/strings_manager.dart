@@ -29,8 +29,13 @@ class AppStrings{
   static const ok = "Ok";
 
   static const emailHint = "Email";
-  static const invalidEmail = "Invalid Email";
+  static const invalidEmail = "Email Format isn't valid";
   static const resetPassword = "Reset Password";
   static const success = "Success";
+
+  static const userNameInvalid = "User Name should be at least 8 characters";
+  static const mobileNumberInvalid = "Mobile Number should be at least 10 digits";
+  static const passwordInvalid = "Password should be at least 6 digits";
+
 
 }

@@ -4,12 +4,21 @@ part 'freezed_data_class.freezed.dart';
 
 
 @freezed
-class LoginObject with _$LoginObject{
-  factory LoginObject(String userName,String password) = _LoginObject;
+abstract class LoginObject with _$LoginObject {
+  const factory LoginObject(
+      String userName,
+      String password,
+      ) = _LoginObject;
+}
 
-  @override
-  String get password => password;
-
-  @override
-  String get userName => userName;
+@freezed
+abstract class RegisterObject with _$RegisterObject {
+  const factory RegisterObject(
+      String userName,
+      String countryCode,
+      String mobileNumber,
+      String email,
+      String password,
+      String profilePicture,
+      ) = _RegisterObject;
 }
