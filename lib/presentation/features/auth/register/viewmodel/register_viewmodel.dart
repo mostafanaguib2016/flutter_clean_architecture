@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/app/base_functions.dart';
 import 'package:flutter_clean_architecture/domain/usecase/register_usecase.dart';
 import 'package:flutter_clean_architecture/presentation/base/base_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/common/freezed_data_class.dart';
+import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 
 class RegisterViewModel extends BaseViewModel
@@ -29,6 +32,7 @@ class RegisterViewModel extends BaseViewModel
     }else{
       registerObject = registerObject.copyWith(password: "");
     }
+    validate();
   }
 
   @override
@@ -38,6 +42,7 @@ class RegisterViewModel extends BaseViewModel
     }else{
       registerObject = registerObject.copyWith(userName: "");
     }
+    validate();
   }
 
   @override
@@ -47,6 +52,7 @@ class RegisterViewModel extends BaseViewModel
     }else{
       registerObject = registerObject.copyWith(countryCode: "");
     }
+    validate();
   }
 
   @override
@@ -56,6 +62,7 @@ class RegisterViewModel extends BaseViewModel
     }else{
       registerObject = registerObject.copyWith(email: "");
     }
+    validate();
   }
 
   @override
@@ -65,6 +72,7 @@ class RegisterViewModel extends BaseViewModel
     }else{
       registerObject = registerObject.copyWith(mobileNumber: "");
     }
+    validate();
   }
 
   @override
@@ -74,6 +82,7 @@ class RegisterViewModel extends BaseViewModel
     }else{
       registerObject = registerObject.copyWith(profilePicture: "");
     }
+    validate();
   }
 
 
@@ -83,8 +92,24 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
-  register() {
-
+  register() async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
+    (await
+    _registerUseCase.execute(
+        RegisterUseCaseInput(
+            registerObject.userName, registerObject.countryCode,
+            registerObject.mobileNumber, registerObject.email,
+            registerObject.password, registerObject.profilePicture
+        ))).fold(
+          (failure) =>{
+        inputState.add(ErrorState(StateRendererType.popupErrorState,failure.message)),
+        debugPrint("ERROR ==>  ${failure.message}  ${failure.code}")
+      },
+          (data) =>{
+        inputState.add(ContentState()),
+        // isUserLoggedInSuccessfullyStreamController.add(true)
+      },
+    );
   }
 
 
@@ -140,7 +165,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   Stream<bool> get outIsPasswordValid => passwordStreamController.stream.map((password) =>
-  _isPasswordValid(password));
+      _isPasswordValid(password));
   @override
   Stream<String?> get outErrorPassword => outIsPasswordValid.map((isPasswordValid) =>
   isPasswordValid ? null : AppStrings.passwordInvalid
@@ -168,13 +193,16 @@ class RegisterViewModel extends BaseViewModel
 
   bool _areAllValid(){
     return registerObject.userName.isNotEmpty &&
-    registerObject.email.isNotEmpty &&
-    registerObject.mobileNumber.isNotEmpty &&
-    registerObject.password.isNotEmpty &&
-    registerObject.profilePicture.isNotEmpty &&
-    registerObject.countryCode.isNotEmpty ;
+        registerObject.email.isNotEmpty &&
+        registerObject.mobileNumber.isNotEmpty &&
+        registerObject.password.isNotEmpty &&
+        registerObject.profilePicture.isNotEmpty &&
+        registerObject.countryCode.isNotEmpty ;
   }
 
+  validate(){
+    inputAreAllInputsValid.add(null);
+  }
 
 }
 
