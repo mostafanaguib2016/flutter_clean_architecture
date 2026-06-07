@@ -24,6 +24,8 @@ class AppStrings{
   static const login = "Login";
   static const forgetPassword = "Forget password";
   static const registerText = "Not a member ? Sign up";
+  static const loginText = "Already have an account ? Login";
+  static const register = "Register";
   static const loading = "Loading...";
   static const retryAgain = "Retry again";
   static const ok = "Ok";
@@ -35,6 +37,8 @@ class AppStrings{
 
   static const userNameInvalid = "User Name should be at least 8 characters";
   static const mobileNumberInvalid = "Mobile Number should be at least 10 digits";
+  static const mobileNumber = "Mobile Number";
+  static const profilePicture = "Profile Picture";
   static const passwordInvalid = "Password should be at least 6 digits";
 
 
