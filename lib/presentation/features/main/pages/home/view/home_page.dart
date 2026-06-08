@@ -89,16 +89,19 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(AppSizes.s12),
-                      child: Image.network(banner.image),
+                      child: Image.network(
+                          banner.image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 )
         ).toList(),
         options: CarouselOptions(
-          height: AppSizes.s100,
+          height: AppSizes.s190,
           autoPlay: true,
           enableInfiniteScroll: true,
-          enlargeCenterPage: true,
+          enlargeCenterPage: true,aspectRatio: 1.0
         ),
       );
     }else{
@@ -123,7 +126,7 @@ class _HomePageState extends State<HomePage> {
           height: AppSizes.s140,
           margin: EdgeInsets.symmetric(vertical: AppMargins.m12),
           child: ListView.builder(
-            itemCount: services.length,
+              itemCount: services.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context,index){
                 return Card(
@@ -140,13 +143,23 @@ class _HomePageState extends State<HomePage> {
                       ClipRRect(
                         borderRadius: BorderRadiusGeometry.circular(AppSizes.s12),
                         child: Image.network(
-                            services[index].image,
+                          services[index].image,
                           fit: BoxFit.cover,
                           width: AppSizes.s100,
                           height: AppSizes.s100,
                         ),
                       ),
-                      Text(services[index].title),
+                      Padding(
+                        padding: const EdgeInsets.only(top: AppPaddings.p8),
+                        child: Align(
+                          alignment: AlignmentGeometry.center,
+                          child: Text(
+                            services[index].title,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: ColorManager.grey2),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );

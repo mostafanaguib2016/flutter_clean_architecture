@@ -54,6 +54,7 @@ ThemeData getApplicationTheme(){
       displaySmall: getMediumStyle(color: ColorManager.txtGrey,fontSize: FontSize.s14),
       headlineSmall: getRegularStyle(color: ColorManager.txtGrey,fontSize: FontSize.s14),
       labelSmall: getBoldStyle(color: ColorManager.primary,fontSize: FontSize.s12),
+
     ),
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(AppPaddings.p8),
