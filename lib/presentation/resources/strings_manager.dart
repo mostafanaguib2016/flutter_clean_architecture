@@ -44,4 +44,9 @@ class AppStrings{
   static const photoGallery = "Photo from gallery";
   static const photoCamera = "Photo from camera";
 
+  static const home = "Home";
+  static const search = "Search";
+  static const settings = "Settings";
+  static const notifications = "Notifications";
+
 }
