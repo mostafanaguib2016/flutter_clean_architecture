@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
 import 'package:flutter_clean_architecture/app/constants.dart';
 import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
@@ -29,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // final TextEditingController _passwordController = TextEditingController();
+  final AppSharedPreferences _sharedPreferences = instance<AppSharedPreferences>();
 
   _bind(){
     _viewModel.start();
@@ -47,6 +49,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _viewModel.setPassword(_passwordController.text.toString());
     });
 
+    _viewModel.isUserRegisteredSuccessfullyStreamController.stream.listen((isRegistered){
+      if(isRegistered){
+        SchedulerBinding.instance.addPostFrameCallback((_){
+          _sharedPreferences.setUserLoggedIn();
+          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+        });
+      }
+    });
 
   }
 
