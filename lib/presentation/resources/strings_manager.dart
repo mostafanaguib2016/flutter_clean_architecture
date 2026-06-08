@@ -41,5 +41,7 @@ class AppStrings{
   static const profilePicture = "Profile Picture";
   static const passwordInvalid = "Password should be at least 6 digits";
 
+  static const photoGallery = "Photo from gallery";
+  static const photoCamera = "Photo from camera";
 
 }

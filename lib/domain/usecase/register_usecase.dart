@@ -14,7 +14,7 @@ class RegisterUseCase implements BaseUseCase<RegisterUseCaseInput,Authentication
   Future<Either<Failure, Authentication>> execute(RegisterUseCaseInput input) async{
     return await _repository.register((RegisterRequest(
       input.userName,input.countryCode,input.mobileNumber,input.email,
-      input.password,input.profilePicture
+      input.password,""
     )));
   }
 

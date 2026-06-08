@@ -12,6 +12,7 @@ import 'package:flutter_clean_architecture/presentation/resources/routes_manager
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,6 +23,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final RegisterViewModel _viewModel = instance<RegisterViewModel>();
+  final ImagePicker _imagePicker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -126,7 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsetsGeometry.zero,
                             flagWidth: AppSizes.s60,
                             onChanged: (countryCode){
-                              _viewModel.setCountryCode(countryCode.code ?? Constants.empty);
+                              debugPrint("CODE ==> $countryCode ${countryCode.code}");
+                              _viewModel.setCountryCode(countryCode.toString() ?? Constants.empty);
                             },
                           )
                       ),
@@ -197,14 +200,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Container(
                   height: AppSizes.s40,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSizes.s4),
+                    borderRadius: BorderRadius.circular(AppSizes.s8),
                     border: Border.all(
                       color: ColorManager.lightGrey,
                     ),
                   ),
                   child: GestureDetector(
                     onTap: (){
-                      _showPicker();
+                      _showPicker(context);
                     },
                     child: _getMediaWidget(),
                   ),
@@ -238,8 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     right: AppPaddings.p24),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, Routes.loginRoute);
+                    Navigator.of(context).pop();
                   },
                   child: Text(AppStrings.loginText,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: ColorManager.primary)),
@@ -281,10 +283,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  _showPicker(){
-
+  _showPicker(BuildContext context){
+    showModalBottomSheet(
+        context: context,
+      builder: (BuildContext context){
+          return SafeArea(
+            child: Wrap(
+              children: [
+                ListTile(
+                  trailing: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.camera),
+                  title: Text(AppStrings.photoGallery),
+                  onTap: (){
+                    _imageFromGallery();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  trailing: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.camera_outlined),
+                  title: Text(AppStrings.photoCamera),
+                  onTap: (){
+                    _imageFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          );
+      },
+    );
   }
 
+  _imageFromGallery() async{
+    var image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    _viewModel.setProfilePicture(File(image?.path ?? ""));
+  }
+
+  _imageFromCamera() async{
+    var image = await _imagePicker.pickImage(source: ImageSource.camera);
+    _viewModel.setProfilePicture(File(image?.path ?? ""));
+  }
 
 
   @override

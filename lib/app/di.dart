@@ -13,6 +13,7 @@ import 'package:flutter_clean_architecture/presentation/features/auth/forget_pas
 import 'package:flutter_clean_architecture/presentation/features/auth/login/viewmodel/login_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/register/viewmodel/register_viewmodel.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +30,15 @@ Future<void> initAppModule() async{
   instance.registerLazySingleton<AppSharedPreferences>(() => AppSharedPreferences(instance<SharedPreferences>()));
 
   // network info instance
-  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(InternetConnectionChecker.I));
+  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(
+    InternetConnectionChecker.createInstance(
+      addresses: [
+        AddressCheckOption(
+          uri: Uri.parse('https://www.google.com'),
+        ),
+      ],
+    ),
+  ));
 
   // dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
@@ -58,6 +67,7 @@ initRegisterModule() {
   if(!GetIt.I.isRegistered<RegisterUseCase>()){
     instance.registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
     instance.registerFactory<RegisterViewModel>(() => RegisterViewModel(instance()));
+    instance.registerFactory<ImagePicker>(() => ImagePicker());
   }
 
 }
