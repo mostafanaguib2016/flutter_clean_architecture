@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/presentation/features/main/pages/home_page.dart';
-import 'package:flutter_clean_architecture/presentation/features/main/pages/notifications_page.dart';
-import 'package:flutter_clean_architecture/presentation/features/main/pages/search_page.dart';
-import 'package:flutter_clean_architecture/presentation/features/main/pages/settings_page.dart';
+import 'package:flutter_clean_architecture/presentation/features/main/pages/home/view/home_page.dart';
+import 'package:flutter_clean_architecture/presentation/features/main/pages/notifications/notifications_page.dart';
+import 'package:flutter_clean_architecture/presentation/features/main/pages/search/search_page.dart';
+import 'package:flutter_clean_architecture/presentation/features/main/pages/settings/settings_page.dart';
 import 'package:flutter_clean_architecture/presentation/resources/color_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/values_manager.dart';

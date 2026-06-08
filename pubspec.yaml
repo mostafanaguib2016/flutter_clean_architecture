@@ -32,6 +32,8 @@ dependencies:
   country_code_picker: ^3.4.1
   image_picker: ^1.2.2
   connectivity_plus: ^6.1.5
+  rxdart: ^0.28.0
+  carousel_slider: ^5.1.2
 
 
 
