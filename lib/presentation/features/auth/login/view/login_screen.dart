@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
@@ -84,11 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.emailAddress,
                           controller: _userNameController,
                           decoration: InputDecoration(
-                              hintText: AppStrings.username,
-                              labelText: AppStrings.username,
+                              hintText: AppStrings.username.tr(),
+                              labelText: AppStrings.username.tr(),
                               errorText: (snapshot.data ?? true)
                                   ? null
-                                  : AppStrings.usernameError),
+                                  : AppStrings.usernameError.tr()),
                         );
                       }),
                 ),
@@ -105,11 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.visiblePassword,
                           controller: _passwordController,
                           decoration: InputDecoration(
-                              hintText: AppStrings.password,
-                              labelText: AppStrings.password,
+                              hintText: AppStrings.password.tr(),
+                              labelText: AppStrings.password.tr(),
                               errorText: (snapshot.data ?? true)
                                   ? null
-                                  : AppStrings.passwordError),
+                                  : AppStrings.passwordError.tr()),
                         );
                       }),
                 ),
@@ -129,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: (snapshot.data ?? false) ? (){
                               _loginViewmodel.login();
                             } : null,
-                            child: const Text(AppStrings.login),
+                            child: Text(AppStrings.login.tr()),
                           ),
                         );
                       }),
@@ -147,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushNamed(
                                 context, Routes.forgetPasswordRoute);
                           },
-                          child: Text(AppStrings.forgetPassword,
+                          child: Text(AppStrings.forgetPassword.tr(),
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: ColorManager.primary)),
                         ),
                         TextButton(
@@ -155,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushNamed(
                                 context, Routes.registerRoute);
                           },
-                          child: Text(AppStrings.registerText,
+                          child: Text(AppStrings.registerText.tr(),
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: ColorManager.primary)),
                         )
                       ],

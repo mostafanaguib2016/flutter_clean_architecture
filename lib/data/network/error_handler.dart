@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_architecture/data/network/failure.dart';
+import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 
 class ErrorHandler implements Exception {
   late Failure failure;
@@ -120,21 +121,21 @@ class ResponseCode{
 }
 
 class ResponseMessage{
-  static const String SUCCESS = "success";
-  static const String NO_CONTENT = "success";
-  static const String BAD_REQUEST = "Bad request, Try again later";
-  static const String FORBIDDEN = "Forbidden request, Try again later";
-  static const String UNAUTHORIZED = "unauthorized, Try again later";
-  static const String NOT_FOUND = "Not found request";
-  static const String INTERNAL_SERVER_ERROR = "Something went wrong, Try again later";
-  static const String CONNECTION_TIMEOUT = "Time out error, Try again later";
-  static const String RECEIVE_TIMEOUT = "Request was cancelled";
-  static const String SEND_TIMEOUT = "Time out error, Try again later";
-  static const String CACHE_ERROR = "Cache error, Try again later";
-  static const String CANCEL = "Request was cancelled, Try again later";
-  static const String NO_INTERNET_CONNECTION = "Please check your internet connection";
-  static const String UNKOWN = "Something went wrong";
-  static const String DEFAULT = "Something went wrong";
+  static const String SUCCESS = AppStrings.success;
+  static const String NO_CONTENT = AppStrings.success;
+  static const String BAD_REQUEST = AppStrings.badRequestError;
+  static const String FORBIDDEN = AppStrings.forbiddenError;
+  static const String UNAUTHORIZED = AppStrings.unauthorizedError;
+  static const String NOT_FOUND = AppStrings.notFoundError;
+  static const String INTERNAL_SERVER_ERROR = AppStrings.internalServerError;
+  static const String CONNECTION_TIMEOUT = AppStrings.timeoutError;
+  static const String RECEIVE_TIMEOUT = AppStrings.timeoutError;
+  static const String SEND_TIMEOUT = AppStrings.timeoutError;
+  static const String CACHE_ERROR = AppStrings.cacheError;
+  static const String CANCEL = AppStrings.cancelError;
+  static const String NO_INTERNET_CONNECTION = AppStrings.noInternetError;
+  static const String UNKOWN = AppStrings.defaultError;
+  static const String DEFAULT = AppStrings.defaultError;
 }
 
 class ApiInternalStatus{

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/presentation/resources/assets_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/color_manager.dart';
@@ -60,7 +61,7 @@ class StateRenderer extends StatelessWidget {
             [
               _getAnimatedImage(JsonAssets.errorJson),
               _getMessage(message),
-              _getRetryButton(AppStrings.ok,context)
+              _getRetryButton(AppStrings.ok.tr(),context)
             ]
         );
       case StateRendererType.fullScreenLoadingState:
@@ -72,7 +73,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsColumn([
           _getAnimatedImage(JsonAssets.errorJson),
           _getMessage(message),
-          _getRetryButton(AppStrings.retryAgain,context)
+          _getRetryButton(AppStrings.retryAgain.tr(),context)
         ]);
       case StateRendererType.fullScreenEmptyState:
         return _getItemsColumn(

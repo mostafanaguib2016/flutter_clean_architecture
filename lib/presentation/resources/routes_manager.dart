@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/forget_password/view/forget_password_screen.dart';
@@ -53,8 +54,8 @@ class RouteGenerator{
   }
   static Route<dynamic> unDefinedRoute(){
     return MaterialPageRoute(builder: (_) => Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.noRouteFound),),
-      body: const Center(child: Text(AppStrings.noRouteFound),),
+      appBar: AppBar(title: Text(AppStrings.noRouteFound.tr()),),
+      body: Center(child: Text(AppStrings.noRouteFound.tr()),),
     ));
   }
 

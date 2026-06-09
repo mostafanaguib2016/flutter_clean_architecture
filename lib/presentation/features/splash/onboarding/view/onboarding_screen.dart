@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
@@ -86,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Navigator.pushNamed(context, Routes.loginRoute);
                   },
                   child: Text(
-                    AppStrings.skip,
+                    AppStrings.skip.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
