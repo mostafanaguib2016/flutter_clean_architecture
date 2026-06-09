@@ -9,7 +9,6 @@ import 'package:flutter_clean_architecture/data/network/network_info.dart';
 import 'package:flutter_clean_architecture/data/network/requests.dart';
 import 'package:flutter_clean_architecture/domain/models/models.dart';
 import 'package:flutter_clean_architecture/domain/repository/repository.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class RepositoryImpl implements Repository {
 
@@ -114,6 +113,24 @@ class RepositoryImpl implements Repository {
     }
 
 
+  }
+
+  @override
+  Future<Either<Failure, StoreDetails>> getStoreDetails() async{
+    if(await _networkInfo.isConnected){
+      try {
+        final response = await _remoteDataSource.getStoreDetails();
+        if(response.status == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(ApiInternalStatus.Failure, response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (e) {
+        return Left(ErrorHandler.handleError(e).failure);
+      }
+    }else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
   }
 
 }

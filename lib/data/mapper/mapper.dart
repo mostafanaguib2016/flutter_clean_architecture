@@ -41,9 +41,9 @@ extension ForgotPasswordResponseMapper on ForgotPasswordResponse? {
 extension ServiceResponseMapper on ServiceResponse?{
   Service toDomain(){
     return Service(
-        this?.id.orEmpty() ?? Constants.empty,
-        this?.title.orEmpty() ?? Constants.empty,
-        this?.image.orEmpty() ?? Constants.empty,
+      this?.id.orEmpty() ?? Constants.empty,
+      this?.title.orEmpty() ?? Constants.empty,
+      this?.image.orEmpty() ?? Constants.empty,
     );
   }
 }
@@ -70,26 +70,39 @@ extension HomeResponseMapper on HomeResponse? {
   HomeObject toDomain() {
     List<Service> services = (
         this?.data?.services
-        ?.map((serviceResponse) => serviceResponse.toDomain()) ??
-        const Iterable.empty())
+            ?.map((serviceResponse) => serviceResponse.toDomain()) ??
+            const Iterable.empty())
         .cast<Service>()
         .toList();
 
     List<BannerAd> banners = (
         this?.data?.banners
-        ?.map((bannersResponse) => bannersResponse.toDomain()) ??
-        const Iterable.empty())
+            ?.map((bannersResponse) => bannersResponse.toDomain()) ??
+            const Iterable.empty())
         .cast<BannerAd>()
         .toList();
 
     List<Store> stores = (
         this?.data?.stores
-        ?.map((storesResponse) => storesResponse.toDomain()) ??
-        const Iterable.empty())
+            ?.map((storesResponse) => storesResponse.toDomain()) ??
+            const Iterable.empty())
         .cast<Store>()
         .toList();
 
     var data = HomeData(services, banners, stores);
     return HomeObject(data);
+  }
+}
+
+extension StoreDetailsResponseMapper on StoreDetailsResponse? {
+  StoreDetails toDomain() {
+    return StoreDetails(
+        this?.id.orZero() ?? Constants.zero,
+        this?.title.orEmpty() ?? Constants.empty,
+        this?.image.orEmpty() ?? Constants.empty,
+        this?.services.orEmpty() ?? Constants.empty,
+        this?.details.orEmpty() ?? Constants.empty,
+        this?.about.orEmpty() ?? Constants.empty
+    );
   }
 }
