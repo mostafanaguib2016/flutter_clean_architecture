@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
 import 'package:flutter_clean_architecture/data/data_source/remote_data_source.dart';
+import 'package:flutter_clean_architecture/data/local_data_source/local_data_source.dart';
 import 'package:flutter_clean_architecture/data/network/app_api.dart';
 import 'package:flutter_clean_architecture/data/network/dio_factory.dart';
 import 'package:flutter_clean_architecture/data/network/network_info.dart';
@@ -52,8 +53,11 @@ Future<void> initAppModule() async{
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImpl(instance()));
 
+  // local data source
+  instance.registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
+
   // repository
-  instance.registerLazySingleton<Repository>(() => RepositoryImpl(instance(),instance()));
+  instance.registerLazySingleton<Repository>(() => RepositoryImpl(instance(),instance(),instance()));
 
 }
 
