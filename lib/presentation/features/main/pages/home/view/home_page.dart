@@ -7,6 +7,8 @@ import 'package:flutter_clean_architecture/domain/models/models.dart';
 import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:flutter_clean_architecture/presentation/features/main/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter_clean_architecture/presentation/resources/color_manager.dart';
+import 'package:flutter_clean_architecture/presentation/resources/font_manager.dart';
+import 'package:flutter_clean_architecture/presentation/resources/routes_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/values_manager.dart';
 
@@ -50,25 +52,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getHomeContent(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _getBannerCarousel(),
-        _getSection(AppStrings.services),
-        _getServices(),
-        _getSection(AppStrings.stores),
-        _getStores(),
-      ],
-    );
-  }
-
-  Widget _getBannerCarousel(){
-    return StreamBuilder<List<BannerAd>>(
-      stream: _viewModel.outputBanners,
-      builder: (context,snapshot){
-        return _getBannerWidget(snapshot.data);
-      },
-    );
+    return StreamBuilder<HomeViewObject>(
+        stream: _viewModel.outputHomeData,
+        builder: (context, snapshot) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _getBannerWidget(snapshot.data?.banners),
+              _getSection(AppStrings.services),
+              _getServicesWidget(snapshot.data?.services),
+              _getSection(AppStrings.stores),
+              _getStoresWidget(snapshot.data?.stores),
+            ],
+          );
+        });
   }
 
   Widget _getBannerWidget(List<BannerAd>? banners){
@@ -90,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(AppSizes.s12),
                       child: Image.network(
-                          banner.image,
+                        banner.image,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -98,24 +96,15 @@ class _HomePageState extends State<HomePage> {
                 )
         ).toList(),
         options: CarouselOptions(
-          height: AppSizes.s190,
-          autoPlay: true,
-          enableInfiniteScroll: true,
-          enlargeCenterPage: true,aspectRatio: 1.0
+            height: AppSizes.s190,
+            autoPlay: true,
+            enableInfiniteScroll: true,
+            enlargeCenterPage: true,aspectRatio: 1.0
         ),
       );
     }else{
       return SizedBox();
     }
-  }
-
-  Widget _getServices(){
-    return StreamBuilder<List<Service>>(
-      stream: _viewModel.outputServices,
-      builder: (context,snapshot){
-        return _getServicesWidget(snapshot.data);
-      },
-    );
   }
 
   Widget _getServicesWidget(List<Service>? services){
@@ -128,13 +117,14 @@ class _HomePageState extends State<HomePage> {
           child: ListView.builder(
               itemCount: services.length,
               scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.zero,
               itemBuilder: (context,index){
                 return Card(
                   elevation: AppSizes.s4,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(AppSizes.s12),
                       side: BorderSide(
-                          color: ColorManager.primary,
+                          color: ColorManager.transparent,
                           width: AppSizes.s1
                       )
                   ),
@@ -145,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         child: Image.network(
                           services[index].image,
                           fit: BoxFit.cover,
-                          width: AppSizes.s100,
+                          width: AppSizes.s140,
                           height: AppSizes.s100,
                         ),
                       ),
@@ -172,9 +162,45 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
-  Widget _getStores(){
-    return Center();
+  Widget _getStoresWidget(List<Store>? stores){
+    if(stores != null){
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppPaddings.p12),
+        child: Flex(
+          direction: Axis.vertical,
+          children: [
+            GridView.count(
+              crossAxisCount: AppSizes.s2,
+              crossAxisSpacing: AppSizes.s8,
+              mainAxisSpacing: AppSizes.s8,
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              children:
+                List.generate(
+                    stores.length, (index){
+                      return InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, Routes.storeDetailsRoute);
+                        },
+                        child: Card(
+                          elevation: AppSizes.s12,
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.circular(AppSizes.s12),
+                            child: Image.network(
+                              stores[index].image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
+                }),
+            )
+          ],
+        ),
+      );
+    }else{
+      return SizedBox();
+    }
   }
 
   Widget _getSection(String title){
@@ -185,7 +211,7 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.labelSmall,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: FontSize.s14),
       ),
     );
   }

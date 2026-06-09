@@ -4,6 +4,7 @@ import 'package:flutter_clean_architecture/presentation/features/auth/forget_pas
 import 'package:flutter_clean_architecture/presentation/features/auth/login/view/login_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/auth/register/view/register_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/main/main_screen.dart';
+import 'package:flutter_clean_architecture/presentation/features/main/store_details/store_details_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/splash/onboarding/view/onboarding_screen.dart';
 import 'package:flutter_clean_architecture/presentation/features/splash/splash_screen.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
@@ -41,7 +42,7 @@ class RouteGenerator{
         initHomeModule();
         return MaterialPageRoute(builder: (_)=>const MainScreen());
       case Routes.storeDetailsRoute:
-        return MaterialPageRoute(builder: (_)=>const SplashScreen());
+        return MaterialPageRoute(builder: (_)=>const StoreDetailsScreen());
       default:
         return unDefinedRoute();
     }

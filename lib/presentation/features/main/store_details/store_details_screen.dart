@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 
 class StoreDetailsScreen extends StatefulWidget {
   const StoreDetailsScreen({super.key});
@@ -10,6 +11,9 @@ class StoreDetailsScreen extends StatefulWidget {
 class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+      child: Text(AppStrings.stores),
+    ));
   }
 }
