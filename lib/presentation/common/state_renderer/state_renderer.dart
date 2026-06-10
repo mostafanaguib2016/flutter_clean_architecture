@@ -84,7 +84,7 @@ class StateRenderer extends StatelessWidget {
           _getAnimatedImage(JsonAssets.successJson),
           _getMessage(title),
           _getMessage(message),
-          _getRetryButton(AppStrings.ok, context)
+          _getRetryButton(AppStrings.ok.tr(), context)
         ]);
       case StateRendererType.contentState:
         return Container();

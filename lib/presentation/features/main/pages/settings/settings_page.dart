@@ -1,11 +1,16 @@
+import 'dart:math' as math;
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/app/app_shared_preferences.dart';
 import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/data/local_data_source/local_data_source.dart';
 import 'package:flutter_clean_architecture/presentation/resources/assets_manager.dart';
+import 'package:flutter_clean_architecture/presentation/resources/language_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/routes_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/strings_manager.dart';
 import 'package:flutter_clean_architecture/presentation/resources/values_manager.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -32,10 +37,10 @@ class _SettingsPageState extends State<SettingsPage> {
             },
             leading: SvgPicture.asset(ImageAssets.changeLangIc),
             title: Text(
-              AppStrings.changeLanguage,
+              AppStrings.changeLanguage.tr(),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getItemTrailing(),
           ),
           ListTile(
             onTap: (){
@@ -43,10 +48,10 @@ class _SettingsPageState extends State<SettingsPage> {
             },
             leading: SvgPicture.asset(ImageAssets.contactUsIc),
             title: Text(
-              AppStrings.contactUs,
+              AppStrings.contactUs.tr(),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getItemTrailing(),
           ),
           ListTile(
             onTap: (){
@@ -54,10 +59,10 @@ class _SettingsPageState extends State<SettingsPage> {
             },
             leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
             title: Text(
-              AppStrings.inviteYourFriends,
+              AppStrings.inviteYourFriends.tr(),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getItemTrailing(),
           ),
           ListTile(
             onTap: (){
@@ -65,18 +70,30 @@ class _SettingsPageState extends State<SettingsPage> {
             },
             leading: SvgPicture.asset(ImageAssets.logoutIc),
             title: Text(
-              AppStrings.logout,
+              AppStrings.logout.tr(),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getItemTrailing(),
           ),
         ],
       ),
     );
   }
 
-  _changeLanguage(){
+  bool isRtl() {
+    return context.locale == ARABIC_LOCAL;
+  }
 
+  _changeLanguage(){
+    _preferences.changeAppLanguage();
+    Phoenix.rebirth(context);
+  }
+
+  Widget _getItemTrailing(){
+    return Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+        child: SvgPicture.asset(ImageAssets.rightArrowSettingsIc));
   }
 
   _contactUs(){}

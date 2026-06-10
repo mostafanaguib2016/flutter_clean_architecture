@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/domain/models/models.dart';
@@ -33,7 +34,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            AppStrings.storeDetails,
+            AppStrings.storeDetails.tr(),
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
@@ -79,11 +80,11 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                 width: double.infinity,
                 height: 250,
               )),
-          _getSection(AppStrings.details),
+          _getSection(AppStrings.details.tr()),
           _getInfoText(storeDetails.details),
-          _getSection(AppStrings.services),
+          _getSection(AppStrings.services.tr()),
           _getInfoText(storeDetails.services),
-          _getSection(AppStrings.about),
+          _getSection(AppStrings.about.tr()),
           _getInfoText(storeDetails.about)
         ],
       );

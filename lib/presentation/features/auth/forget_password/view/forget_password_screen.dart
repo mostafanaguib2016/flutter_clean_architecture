@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/app/di.dart';
 import 'package:flutter_clean_architecture/presentation/common/state_renderer/state_renderer_impl.dart';
@@ -76,11 +77,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailTextEditingController,
                       decoration: InputDecoration(
-                          hintText: AppStrings.emailHint,
-                          labelText: AppStrings.emailHint,
+                          hintText: AppStrings.emailHint.tr(),
+                          labelText: AppStrings.emailHint.tr(),
                           errorText: (snapshot.data ?? true)
                               ? null
-                              : AppStrings.invalidEmail),
+                              : AppStrings.invalidEmail.tr()),
                     );
                   },
                 ),
@@ -101,7 +102,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           onPressed: (snapshot.data ?? false)
                               ? () => _viewModel.forgotPassword()
                               : null,
-                          child: Text(AppStrings.resetPassword)),
+                          child: Text(AppStrings.resetPassword.tr())),
                     );
                   },
                 ),

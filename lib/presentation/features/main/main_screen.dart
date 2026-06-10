@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/presentation/features/main/pages/home/view/home_page.dart';
 import 'package:flutter_clean_architecture/presentation/features/main/pages/notifications/notifications_page.dart';
@@ -23,13 +24,13 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   List<String> listOfTitles = [
-    AppStrings.home,
-    AppStrings.search,
-    AppStrings.notifications,
-    AppStrings.settings,
+    AppStrings.home.tr(),
+    AppStrings.search.tr(),
+    AppStrings.notifications.tr(),
+    AppStrings.settings.tr(),
   ];
 
-  var title = AppStrings.home;
+  var title = AppStrings.home.tr();
   var _currentIndex = 0;
 
   @override
@@ -61,19 +62,19 @@ class _MainScreenState extends State<MainScreen> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
-              label: AppStrings.home,
+              label: AppStrings.home.tr(),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              label: AppStrings.search,
+              label: AppStrings.search.tr(),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications_outlined),
-              label: AppStrings.notifications,
+              label: AppStrings.notifications.tr(),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings_outlined),
-              label: AppStrings.settings,
+              label: AppStrings.settings.tr(),
             ),
           ],
         ),
